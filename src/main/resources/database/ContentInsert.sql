@@ -1,0 +1,1 @@
+INSERT INTO content (content_id, content_type) VALUES (1, "COLLECTION");

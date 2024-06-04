@@ -22,11 +22,11 @@ import java.util.List;
 public class Collection {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "collection_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -38,7 +38,7 @@ public class Collection {
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> books = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "content_id")
     private Content content;
 
@@ -66,6 +66,7 @@ public class Collection {
         }
         collection.setContent(content);
         collection.setDescription(description);
+
         return collection;
     }
 

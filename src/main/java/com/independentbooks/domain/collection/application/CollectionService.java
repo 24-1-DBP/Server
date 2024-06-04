@@ -39,10 +39,12 @@ public class CollectionService {
     }
 
     // 컬렉션 수정
-    public void modify(Long id, String newDescription, List<Book> books) {
+    public Collection modify(Long id, String newDescription, List<Book> books) {
         Collection findCollection = collectionRepository.findCollection(id);
         findCollection.setDescription(newDescription);
         findCollection.setBooks(books);
+
+        return findCollection;
     }
 
     // 컬렉션 삭제

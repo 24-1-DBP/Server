@@ -1,1 +1,1 @@
-INSERT INTO User (user_id, name, created_at, modified_at) VALUES (1, "userA");
+INSERT INTO User (user_id, name, created_at, modified_at) VALUES (1, "userA", now(), now());
