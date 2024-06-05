@@ -14,6 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CollectionWithBooks {
-    private Collection collection;
-    private List<Book> books;
+
+    private Long collection_id;
+    private String collection_name;
+    private String description;
+    private List<Long> collection_book_ids; //현재 컬렉션에 포함된 책들의 ids
+    private List<Long> all_book_ids; //모든 책들의 ids
+
 }

@@ -132,7 +132,25 @@ public class CollectionController {
     public ResponseEntity<CollectionWithBooks> modifyForm(@PathVariable("id") Long id) {
         Collection collection = collectionService.findById(id);
         List<Book> books = bookService.findAll();
-        CollectionWithBooks collectionWithBooks = new CollectionWithBooks(collection, books);
+
+        List<Long> collection_books_ids = new ArrayList<>();
+        List<Long> all_books_ids = new ArrayList<>();
+
+        for (Book b : collection.getBooks()) {
+            collection_books_ids.add(b.getBookId());
+        }
+        for (Book b : books) {
+            all_books_ids.add(b.getBookId());
+        }
+
+        CollectionWithBooks collectionWithBooks = new CollectionWithBooks(
+                collection.getId(),
+                collection.getCollection_name(),
+                collection.getDescription(),
+                collection_books_ids,
+                all_books_ids
+        );
+        
         return ResponseEntity.ok(collectionWithBooks);
     }
 
