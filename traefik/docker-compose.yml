@@ -37,6 +37,14 @@ services:
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.middlewares=admin
       - traefik.http.routers.traefik.tls.certresolver=letsencryptresolver
+  dbp-server:
+    image: server-independents-book
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dbp-server.rule=Host(`dev.${DOMAINNAME}`)
+      - traefik.http.routers.dbp-server.entrypoints=websecure
+      - traefik.http.routers.dbp-server.tls.certresolver=letsencryptresolver
   dbp-db:
     image: mysql:5.7
     container_name: mysql
