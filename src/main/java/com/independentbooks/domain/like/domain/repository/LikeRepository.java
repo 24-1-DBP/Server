@@ -2,6 +2,7 @@ package com.independentbooks.domain.like.domain.repository;
 
 import com.independentbooks.domain.book.domain.Book;
 import com.independentbooks.domain.like.domain.Like;
+import com.independentbooks.domain.user.domain.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,6 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     List<Object[]> findTopBooksByLikesWithinOneMonth(@Param("oneMonthAgo") LocalDateTime oneMonthAgo, Pageable pageable);
 
 
+    void deleteByBookAndUser(Book book, User user);
+    boolean existsByBookAndUser(Book book, User user);
 }

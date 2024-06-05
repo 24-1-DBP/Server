@@ -27,17 +27,29 @@ public class LikeService {
         Long userId = 1L;
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다."));
-        Like like= Like.builder()
-                .book(book)
-                .user(user)
-                .build();
-        likeRepository.save(like);
 
-        ApiResponse apiResponse = ApiResponse.builder()
-                .check(true)
-                .information("좋아요 추가 성공")
-                .build();
-        return ResponseEntity.ok(apiResponse);
+        if(likeRepository.existsByBookAndUser(book,user)){
+            likeRepository.deleteByBookAndUser(book,user);
+            ApiResponse apiResponse = ApiResponse.builder()
+                    .check(false)
+                    .information("좋아요 삭제 성공")
+                    .build();
+            return ResponseEntity.ok(apiResponse);
+        }
+        else {
+            Like like= Like.builder()
+                    .book(book)
+                    .user(user)
+                    .build();
+            likeRepository.save(like);
+
+            ApiResponse apiResponse = ApiResponse.builder()
+                    .check(true)
+                    .information("좋아요 추가 성공")
+                    .build();
+            return ResponseEntity.ok(apiResponse);
+        }
+
     }
 
 
