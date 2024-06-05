@@ -42,7 +42,7 @@ public class CollectionController {
         CreateCollectionResponse collectionResponse;
         List<CreateCollectionResponse> responses = new ArrayList<>();
         for (Collection c : collections) {
-            collectionResponse = new CreateCollectionResponse(c.getId(), c.getCollection_name(), c.getUser().getNickname(), c.getDescription());
+            collectionResponse = new CreateCollectionResponse(c.getId(), c.getCollection_name(), c.getUser().getNickname(), c.getDescription(), c.getBooks());
             responses.add(collectionResponse);
         }
 
