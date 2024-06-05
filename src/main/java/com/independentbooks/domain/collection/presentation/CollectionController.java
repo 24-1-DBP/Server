@@ -150,13 +150,13 @@ public class CollectionController {
                 collection_books_ids,
                 all_books_ids
         );
-        
+
         return ResponseEntity.ok(collectionWithBooks);
     }
 
     // 컬렉션 수정 완료 버튼 클릭시
     @PostMapping
-    public ResponseEntity<Collection> modify(@RequestBody CollectionModifyRequest request) {
+    public ResponseEntity<?> modify(@RequestBody CollectionModifyRequest request) {
 
         List<Book> books = new ArrayList<>();
         for(Long id: request.getIds()){
@@ -164,7 +164,21 @@ public class CollectionController {
         }
 
         Collection modifiedCollection = collectionService.modify(request.getId(), request.getCollection_name(), request.getDescription(), books);
-        return ResponseEntity.ok(modifiedCollection);
+
+        List<Long> book_ids = new ArrayList<>();
+        for (Book b : modifiedCollection.getBooks()) {
+            book_ids.add(b.getBookId());
+        }
+
+        CreateCollectionResponse collectionResponse = new CreateCollectionResponse(
+                modifiedCollection.getId(),
+                modifiedCollection.getCollection_name(),
+                modifiedCollection.getUser().getNickname(),
+                modifiedCollection.getDescription(),
+                book_ids
+        );
+
+        return ResponseEntity.ok(collectionResponse);
     }
 
     // 컬렉션 삭제 버튼 클릭시
