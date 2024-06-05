@@ -38,7 +38,7 @@ services:
       - traefik.http.routers.traefik.middlewares=admin
       - traefik.http.routers.traefik.tls.certresolver=letsencryptresolver
   dbp-server:
-    image: server-independents-book
+    image: server_independents-book
     restart: always
     labels:
       - traefik.enable=true
