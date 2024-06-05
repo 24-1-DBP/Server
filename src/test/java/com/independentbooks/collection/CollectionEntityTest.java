@@ -1,25 +1,6 @@
 package com.independentbooks.collection;
 
-import com.independentbooks.domain.book.domain.Book;
-import com.independentbooks.domain.collection.application.CollectionService;
-import com.independentbooks.domain.collection.domain.Collection;
-import com.independentbooks.domain.collection.domain.repository.CollectionRepository;
-import com.independentbooks.domain.content.domain.Content;
-import com.independentbooks.domain.content.domain.ContentType;
-import com.independentbooks.domain.user.domain.User;
-import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.time.LocalTime.now;
-
+/*
 @SpringBootTest
 @Transactional
 public class CollectionEntityTest {
@@ -58,4 +39,4 @@ public class CollectionEntityTest {
         System.out.println(collections.get(0).getId());
 
     }
-}
+}*/

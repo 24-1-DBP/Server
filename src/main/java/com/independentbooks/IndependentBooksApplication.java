@@ -1,5 +1,6 @@
 package com.independentbooks;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -8,8 +9,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 public class IndependentBooksApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(IndependentBooksApplication.class, args);
-	}
+    public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.load();
+        System.setProperty("db.host", dotenv.get("DB_HOST"));
+        System.setProperty("db.name", dotenv.get("DB_NAME"));
+        System.setProperty("db.port", dotenv.get("DB_PORT"));
+        System.setProperty("db.user", dotenv.get("DB_USERNAME"));
+        System.setProperty("db.password", dotenv.get("DB_PASSWORD"));
+        SpringApplication.run(IndependentBooksApplication.class, args);
+    }
 
 }
