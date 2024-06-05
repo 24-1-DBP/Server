@@ -15,5 +15,6 @@ import java.util.List;
 public class CollectionModifyRequest {
     private Long id;
     private String description;
-    private List<Book> books;
+//    private List<Book> books;
+    private List<Long> ids;
 }

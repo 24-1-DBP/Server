@@ -143,5 +143,10 @@ public class BookService {
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
+
+    @Transactional(readOnly = true)
+    public Book findById(Long id) {
+        return bookRepository.findById(id).orElse(null);
+    }
 }
 

@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCollectionRequest {
-    private List<Book> books;
+//    private List<Book> books;
+    private List<Long> ids;
     private String description;
 }

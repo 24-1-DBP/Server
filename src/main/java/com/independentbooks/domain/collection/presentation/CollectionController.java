@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,17 +57,23 @@ public class CollectionController {
 
     // 컬렉션 생성 완료 버튼 클릭시
     @PostMapping("/new")
-    public ResponseEntity<Collection> create(@RequestBody CreateCollectionRequest request) {
+    public ResponseEntity<Void> create(@RequestBody CreateCollectionRequest request) {
         // ID가 1인 유저 조회
         User findUser = userService.findUserById(1L).orElse(null);
         Content content = contentService.find(1L);
-        Collection collection = Collection.createCollection(findUser, content, request.getDescription(), request.getBooks());
+
+        List<Book> books = new ArrayList<>();
+        for(Long id: request.getIds()){
+            books.add(bookService.findById(id));
+        }
+
+        Collection collection = Collection.createCollection(findUser, content, request.getDescription(), books);
         collectionService.create(collection);
-        return ResponseEntity.ok(collection);
+        return ResponseEntity.ok().build();
     }
 
     // 컬렉션 수정 버튼 클릭시 수정 폼을 보여줌
-    @GetMapping("/modify/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CollectionWithBooks> modifyForm(@PathVariable("id") Long id) {
         Collection collection = collectionService.findById(id);
         List<Book> books = bookService.findAll();
@@ -75,14 +82,20 @@ public class CollectionController {
     }
 
     // 컬렉션 수정 완료 버튼 클릭시
-    @PostMapping("/modify")
+    @PostMapping
     public ResponseEntity<Collection> modify(@RequestBody CollectionModifyRequest request) {
-        Collection modifiedCollection = collectionService.modify(request.getId(), request.getDescription(), request.getBooks());
+
+        List<Book> books = new ArrayList<>();
+        for(Long id: request.getIds()){
+            books.add(bookService.findById(id));
+        }
+
+        Collection modifiedCollection = collectionService.modify(request.getId(), request.getDescription(), books);
         return ResponseEntity.ok(modifiedCollection);
     }
 
     // 컬렉션 삭제 버튼 클릭시
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         Collection findCollection = collectionService.findById(id);
         collectionService.delete(findCollection);
