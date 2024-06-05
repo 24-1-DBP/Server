@@ -7,6 +7,7 @@ import com.independentbooks.domain.collection.domain.Collection;
 import com.independentbooks.domain.collection.dto.request.CollectionModifyRequest;
 import com.independentbooks.domain.collection.dto.request.CollectionWithBooks;
 import com.independentbooks.domain.collection.dto.request.CreateCollectionRequest;
+import com.independentbooks.domain.collection.dto.response.CreateCollectionResponse;
 import com.independentbooks.domain.content.application.ContentService;
 import com.independentbooks.domain.content.domain.Content;
 import com.independentbooks.domain.content.domain.ContentType;
@@ -37,7 +38,15 @@ public class CollectionController {
     @GetMapping("/all")
     public ResponseEntity<?> getCollections() {
         List<Collection> collections = collectionService.findAll();
-        return ResponseEntity.ok(collections);
+
+        CreateCollectionResponse collectionResponse;
+        List<CreateCollectionResponse> responses = new ArrayList<>();
+        for (Collection c : collections) {
+            collectionResponse = new CreateCollectionResponse(c.getId(), c.getCollection_name(), c.getUser().getNickname(), c.getDescription());
+            responses.add(collectionResponse);
+        }
+
+        return ResponseEntity.ok(responses);
     }
 
     // 특정 컬렉션 조회

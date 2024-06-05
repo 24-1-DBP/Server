@@ -16,7 +16,7 @@ spring:
   jpa:
     database-platform:
     hibernate:
-      ddl-auto: create #create / validate 확인
+      ddl-auto: update #create / validate 확인
 
     #배포 할 때는 open-in-view false 설정
     open-in-view: true
