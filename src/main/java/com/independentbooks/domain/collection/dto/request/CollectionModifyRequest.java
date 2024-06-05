@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CollectionModifyRequest {
     private Long id;
+    private String collection_name;
     private String description;
 //    private List<Book> books;
     private List<Long> ids;

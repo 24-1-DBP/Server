@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateCollectionRequest {
 //    private List<Book> books;
+    private String collection_name;
     private List<Long> ids;
     private String description;
 }
