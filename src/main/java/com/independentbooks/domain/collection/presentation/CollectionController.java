@@ -67,7 +67,7 @@ public class CollectionController {
             books.add(bookService.findById(id));
         }
 
-        Collection collection = Collection.createCollection(findUser, content, request.getDescription(), books);
+        Collection collection = Collection.createCollection(request.getCollection_name(), findUser, content, request.getDescription(), books);
         collectionService.create(collection);
         return ResponseEntity.ok().build();
     }
@@ -90,7 +90,7 @@ public class CollectionController {
             books.add(bookService.findById(id));
         }
 
-        Collection modifiedCollection = collectionService.modify(request.getId(), request.getDescription(), books);
+        Collection modifiedCollection = collectionService.modify(request.getId(), request.getCollection_name(), request.getDescription(), books);
         return ResponseEntity.ok(modifiedCollection);
     }
 

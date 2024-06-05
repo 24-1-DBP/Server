@@ -145,8 +145,8 @@ VALUES (1, "userA", now(), now());
 INSERT INTO content (content_id, content_type)
 VALUES (1, "COLLECTION");
 
-INSERT INTO collection (collection_id, content_id, created_at, updated_at, user_id, description)
-VALUES (1, 1, now(), now(), 1, "테스트 컬렉션입니다.");
+INSERT INTO collection (collection_id, content_id, created_at, updated_at, user_id, collection_name, description)
+VALUES (1, 1, now(), now(), 1, "컬렉션A", "테스트 컬렉션입니다.");
 
 INSERT INTO collection_book (book_id, collection_id)
 VALUES (1, 1);

@@ -26,6 +26,8 @@ public class Collection {
     @Column(name = "collection_id")
     private Long id;
 
+    private String collection_name;
+
     @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
@@ -58,7 +60,7 @@ public class Collection {
     }
 
     // 생성 메서드
-    public static Collection createCollection(User user, Content content, String description, List<Book> books) {
+    public static Collection createCollection(String collection_name, User user, Content content, String description, List<Book> books) {
         Collection collection = new Collection();
         collection.setUser(user);
         for (Book book : books) {
@@ -66,6 +68,7 @@ public class Collection {
         }
         collection.setContent(content);
         collection.setDescription(description);
+        collection.setCollection_name(collection_name);
 
         return collection;
     }
