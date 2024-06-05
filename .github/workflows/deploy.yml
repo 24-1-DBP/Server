@@ -2,7 +2,7 @@ name: deploy
 
 on:
   push:
-    branches: ["develop"]
+    branches: [ "develop" ]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -16,7 +16,5 @@ jobs:
           key: ${{ secrets.REMOTE_SSH_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            export GOPATH="$HOME/go"
-            export PATH=$PATH:$GOPATH/bin
-            cd ~/devmark-backend && git pull origin dev && docker-compose build && make up &&
-            cd ~/devmark-backend/traefik && docker rollout devmark-backend
+            cd ~/Server && git pull origin dev && docker-compose build &&
+            cd ~/Server/traefik && docker rollout dbp-server
