@@ -40,6 +40,14 @@ public class CollectionController {
         return ResponseEntity.ok(collections);
     }
 
+    // 특정 컬렉션 조회
+    @GetMapping("/collection/{id}")
+    public ResponseEntity<Collection> findCollection(@PathVariable("id") Long id) {
+        Collection collection = collectionService.findById(id);
+        return ResponseEntity.ok(collection);
+    }
+
+
     // Id가 1인 유저의 컬렉션 조회
     @GetMapping("/user/1")
     public ResponseEntity<List<Collection>> userCollection() {
