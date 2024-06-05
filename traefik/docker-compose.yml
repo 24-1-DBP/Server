@@ -57,4 +57,4 @@ services:
       - traefik.tcp.routers.mysql.rule=HostSNI(`*`)
       - traefik.tcp.routers.mysql.entrypoints=mysql
       - traefik.tcp.routers.mysql.service=mysql
-      - traefik.tcp.services.mysql.loadbalancer.server.port=5432
+      - traefik.tcp.services.mysql.loadbalancer.server.port=3306
