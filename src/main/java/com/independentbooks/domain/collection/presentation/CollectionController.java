@@ -41,8 +41,14 @@ public class CollectionController {
 
         CreateCollectionResponse collectionResponse;
         List<CreateCollectionResponse> responses = new ArrayList<>();
+        List<Long> book_ids = new ArrayList<>();
+
         for (Collection c : collections) {
-            collectionResponse = new CreateCollectionResponse(c.getId(), c.getCollection_name(), c.getUser().getNickname(), c.getDescription(), c.getBooks());
+            book_ids.clear();
+            for (Book b : c.getBooks()) {
+                book_ids.add(b.getBookId());
+            }
+            collectionResponse = new CreateCollectionResponse(c.getId(), c.getCollection_name(), c.getUser().getNickname(), c.getDescription(), book_ids);
             responses.add(collectionResponse);
         }
 
@@ -50,20 +56,29 @@ public class CollectionController {
     }
 
     // 특정 컬렉션 조회
-    @GetMapping("/collection/{id}")
-    public ResponseEntity<Collection> findCollection(@PathVariable("id") Long id) {
-        Collection collection = collectionService.findById(id);
-        return ResponseEntity.ok(collection);
-    }
+//    @GetMapping("/collection/{id}")
+//    public ResponseEntity<?> findCollection(@PathVariable("id") Long id) {
+//        Collection c = collectionService.findById(id);
+//
+//        CreateCollectionResponse collectionResponse = new CreateCollectionResponse(c.getId(), c.getCollection_name(), c.getUser().getNickname(), c.getDescription(), c.getBooks());
+//        return ResponseEntity.ok(collectionResponse);
+//    }
 
 
     // Id가 1인 유저의 컬렉션 조회
-    @GetMapping("/user/1")
-    public ResponseEntity<List<Collection>> userCollection() {
-        User findUser = userService.findUserById(1L).orElse(null); // 값이 없으면 null 반환
-        List<Collection> collections = collectionService.findAllByUser(findUser);
-        return ResponseEntity.ok(collections);
-    }
+//    @GetMapping("/user/1")
+//    public ResponseEntity<?> userCollection() {
+//        User findUser = userService.findUserById(1L).orElse(null); // 값이 없으면 null 반환
+//        List<Collection> collections = collectionService.findAllByUser(findUser);
+//
+//        CreateCollectionResponse collectionResponse;
+//        List<CreateCollectionResponse> responses = new ArrayList<>();
+//        for (Collection c : collections) {
+//            collectionResponse = new CreateCollectionResponse(c.getId(), c.getCollection_name(), c.getUser().getNickname(), c.getDescription(), c.getBooks());
+//            responses.add(collectionResponse);
+//        }
+//        return ResponseEntity.ok(responses);
+//    }
 
     // 컬렉션 생성 폼 데이터를 반환
     @GetMapping("/new")

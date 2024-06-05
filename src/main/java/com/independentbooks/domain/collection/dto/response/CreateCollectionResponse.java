@@ -17,5 +17,5 @@ public class CreateCollectionResponse {
     private String collection_name;
     private String user_nickname;
     private String description;
-    private List<Book> books;
+    private List<Long> book_ids;
 }
