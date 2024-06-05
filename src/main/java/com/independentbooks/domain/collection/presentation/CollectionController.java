@@ -39,16 +39,20 @@ public class CollectionController {
     public ResponseEntity<?> getCollections() {
         List<Collection> collections = collectionService.findAll();
 
-        CreateCollectionResponse collectionResponse;
         List<CreateCollectionResponse> responses = new ArrayList<>();
-        List<Long> book_ids = new ArrayList<>();
 
         for (Collection c : collections) {
-            book_ids.clear();
+            List<Long> book_ids = new ArrayList<>();  // 각 컬렉션마다 새로운 리스트 생성
             for (Book b : c.getBooks()) {
                 book_ids.add(b.getBookId());
             }
-            collectionResponse = new CreateCollectionResponse(c.getId(), c.getCollection_name(), c.getUser().getNickname(), c.getDescription(), book_ids);
+            CreateCollectionResponse collectionResponse = new CreateCollectionResponse(
+                    c.getId(),
+                    c.getCollection_name(),
+                    c.getUser().getNickname(),
+                    c.getDescription(),
+                    book_ids
+            );
             responses.add(collectionResponse);
         }
 
@@ -74,28 +78,36 @@ public class CollectionController {
     public ResponseEntity<?> userCollection() {
         User findUser = userService.findUserById(1L).orElse(null); // 값이 없으면 null 반환
         List<Collection> collections = collectionService.findAllByUser(findUser);
-
-        CreateCollectionResponse collectionResponse;
         List<CreateCollectionResponse> responses = new ArrayList<>();
-        List<Long> book_ids = new ArrayList<>();
 
         for (Collection c : collections) {
-            book_ids.clear();
+            List<Long> book_ids = new ArrayList<>(); // 각 컬렉션마다 새로운 리스트 생성
             for (Book b : c.getBooks()) {
                 book_ids.add(b.getBookId());
             }
-            collectionResponse = new CreateCollectionResponse(c.getId(), c.getCollection_name(), c.getUser().getNickname(), c.getDescription(), book_ids);
+            CreateCollectionResponse collectionResponse = new CreateCollectionResponse(
+                    c.getId(),
+                    c.getCollection_name(),
+                    c.getUser().getNickname(),
+                    c.getDescription(),
+                    book_ids
+            );
             responses.add(collectionResponse);
         }
-        
+
         return ResponseEntity.ok(responses);
     }
 
     // 컬렉션 생성 폼 데이터를 반환
     @GetMapping("/new")
-    public ResponseEntity<List<Book>> createForm() {
+    public ResponseEntity<?> createForm() {
         List<Book> books = bookService.findAll();
-        return ResponseEntity.ok(books);
+
+        List<Long> book_ids = new ArrayList<>();
+        for (Book b : books) {
+            book_ids.add(b.getBookId());
+        }
+        return ResponseEntity.ok(book_ids);
     }
 
     // 컬렉션 생성 완료 버튼 클릭시
