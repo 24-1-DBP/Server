@@ -22,5 +22,6 @@ public class BookDetailRes {
     private String pubDate;
     private String isbn;
     private List<ReviewRes> reviews;
+    private Boolean isLiked;
 
 }

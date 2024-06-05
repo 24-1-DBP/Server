@@ -31,7 +31,7 @@ public class LikeService {
         if(likeRepository.existsByBookAndUser(book,user)){
             likeRepository.deleteByBookAndUser(book,user);
             ApiResponse apiResponse = ApiResponse.builder()
-                    .check(false)
+                    .check(true)
                     .information("좋아요 삭제 성공")
                     .build();
             return ResponseEntity.ok(apiResponse);

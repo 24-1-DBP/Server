@@ -5,6 +5,7 @@ import com.independentbooks.domain.book.domain.repository.BookRepository;
 import com.independentbooks.domain.book.dto.response.BookDetailRes;
 import com.independentbooks.domain.book.dto.response.BookListRes;
 import com.independentbooks.domain.book.dto.response.ReviewRes;
+import com.independentbooks.domain.like.domain.Like;
 import com.independentbooks.domain.like.domain.repository.LikeRepository;
 import com.independentbooks.domain.review.domain.Review;
 import com.independentbooks.domain.review.domain.repository.ReviewRepository;
@@ -94,6 +95,8 @@ public class BookService {
     @Transactional(readOnly = true)
     public ResponseEntity<?> getBookDetail(Long bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("해당 도서를 찾을 수 없습니다. ID: " + bookId));
+        User user = userRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        boolean isLiked = likeRepository.existsByBookAndUser(book, user);
         List<Review> reviews = reviewRepository.findAllByBook(book);
         List<ReviewRes> reviewRes = reviews.stream()
                 .map(review -> ReviewRes.builder()
@@ -115,6 +118,7 @@ public class BookService {
                 .pubDate(book.getPublishedDate().toString())
                 .isbn(book.getIsbn())
                 .reviews(reviewRes)
+                .isLiked(isLiked)
                 .build();
 
         return ResponseEntity.ok(bookDetailRes);

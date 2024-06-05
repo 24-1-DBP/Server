@@ -22,5 +22,6 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
 
 
     void deleteByBookAndUser(Book book, User user);
+
     boolean existsByBookAndUser(Book book, User user);
 }
