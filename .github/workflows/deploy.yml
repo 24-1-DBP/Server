@@ -16,5 +16,5 @@ jobs:
           key: ${{ secrets.REMOTE_SSH_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            cd ~/Server && git pull origin dev && docker-compose build &&
+            cd ~/Server && git pull origin develop && docker-compose build &&
             cd ~/Server/traefik && docker rollout dbp-server
