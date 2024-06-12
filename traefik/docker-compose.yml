@@ -46,7 +46,7 @@ services:
       - traefik.http.routers.dbp-server.entrypoints=websecure
       - traefik.http.routers.dbp-server.tls.certresolver=letsencryptresolver
   dbp-frontend:
-    image: frontend-dbp-frontend
+    image: frontend_dbp-frontend
     restart: always
     labels:
       - traefik.enable=true
