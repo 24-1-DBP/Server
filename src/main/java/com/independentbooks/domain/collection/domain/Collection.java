@@ -1,5 +1,6 @@
 package com.independentbooks.domain.collection.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.independentbooks.domain.book.domain.Book;
 import com.independentbooks.domain.content.domain.Content;
 import com.independentbooks.domain.user.domain.User;
@@ -31,6 +32,7 @@ public class Collection {
     private String collection_name;
 
     @ManyToOne()
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
