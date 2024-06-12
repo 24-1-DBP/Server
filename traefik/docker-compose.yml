@@ -45,6 +45,14 @@ services:
       - traefik.http.routers.dbp-server.rule=Host(`dev.${DOMAINNAME}`)
       - traefik.http.routers.dbp-server.entrypoints=websecure
       - traefik.http.routers.dbp-server.tls.certresolver=letsencryptresolver
+  dbp-frontend:
+    image: frontend-dbp-frontend
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dbp-frontend.rule=Host(`front.${DOMAINNAME}`)
+      - traefik.http.routers.dbp-frontend.entrypoints=websecure
+      - traefik.http.routers.dbp-frontend.tls.certresolver=letsencryptresolver
   dbp-db:
     image: mysql:5.7
     container_name: mysql
