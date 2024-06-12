@@ -1,11 +1,10 @@
 package com.independentbooks.domain.collection.domain;
 
-import com.independentbooks.domain.user.domain.User;
 import com.independentbooks.domain.book.domain.Book;
 import com.independentbooks.domain.content.domain.Content;
+import com.independentbooks.domain.user.domain.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,6 +17,9 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Collection {
 
@@ -54,10 +56,6 @@ public class Collection {
     @Column(name = "updated_at", nullable = true)
     private LocalDateTime updatedDate;
 
-    //== 연관관계 메서드 ==//
-    public void addBooks(Book book) {
-        books.add(book);
-    }
 
     // 생성 메서드
     public static Collection createCollection(String collection_name, User user, Content content, String description, List<Book> books) {
@@ -71,6 +69,11 @@ public class Collection {
         collection.setCollection_name(collection_name);
 
         return collection;
+    }
+
+    //== 연관관계 메서드 ==//
+    public void addBooks(Book book) {
+        books.add(book);
     }
 
 }

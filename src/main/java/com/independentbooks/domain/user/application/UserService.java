@@ -3,13 +3,12 @@ package com.independentbooks.domain.user.application;
 
 import com.independentbooks.domain.user.domain.User;
 import com.independentbooks.domain.user.domain.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.webjars.NotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,8 +25,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findUserById(Long id) {
-        return userRepository.findById(id);
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("user not found"));
     }
 
 }

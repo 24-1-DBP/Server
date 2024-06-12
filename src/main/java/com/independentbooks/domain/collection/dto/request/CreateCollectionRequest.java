@@ -1,17 +1,17 @@
 package com.independentbooks.domain.collection.dto.request;
 
-import com.independentbooks.domain.book.domain.Book;
 import lombok.*;
 
 import java.util.List;
 
 @Builder
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCollectionRequest {
-//    private List<Book> books;
+    private List<Long> books;
+    private Long userID;
     private String collection_name;
-    private List<Long> ids;
     private String description;
 }
