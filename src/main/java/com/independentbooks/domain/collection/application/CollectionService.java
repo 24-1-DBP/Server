@@ -6,6 +6,7 @@ import com.independentbooks.domain.collection.domain.Collection;
 import com.independentbooks.domain.collection.domain.repository.CollectionRepository;
 import com.independentbooks.domain.collection.dto.request.CreateCollectionRequest;
 import com.independentbooks.domain.collection.dto.request.UpdateCollectionRequest;
+import com.independentbooks.domain.collection.dto.response.CollectionDTO;
 import com.independentbooks.domain.collection.dto.response.OkResponse;
 import com.independentbooks.domain.user.domain.User;
 import com.independentbooks.domain.user.domain.repository.UserRepository;
@@ -29,7 +30,7 @@ public class CollectionService {
 
     // 컬렉션 생성
     @Transactional
-    public ResponseEntity<Collection> create(CreateCollectionRequest request) {
+    public ResponseEntity<CollectionDTO> create(CreateCollectionRequest request) {
         try {
             List<Book> bookList = new ArrayList<>();
 
@@ -46,7 +47,7 @@ public class CollectionService {
                     .user(user)
                     .build();
             Collection newCollection = collectionRepository.save(paramCollection);
-            return ResponseEntity.ok(newCollection);
+            return ResponseEntity.ok(new CollectionDTO(newCollection));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -54,9 +55,10 @@ public class CollectionService {
 
     // Id로 컬렉션 조회
     @Transactional
-    public ResponseEntity<Collection> findById(Long id) {
+    public ResponseEntity<CollectionDTO> findById(Long id) {
         try {
-            return ResponseEntity.ok(collectionRepository.findById(id).orElseThrow(() -> new NotFoundException("cannot find collection")));
+            Collection collection = collectionRepository.findById(id).orElseThrow(() -> new NotFoundException("cannot find collection"));
+            return ResponseEntity.ok(new CollectionDTO(collection));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -64,15 +66,21 @@ public class CollectionService {
 
     // 모든 컬렉션 조회
     @Transactional
-    public ResponseEntity<List<Collection>> findAll() {
-        return ResponseEntity.ok(collectionRepository.findAll());
+    public ResponseEntity<List<CollectionDTO>> findAll() {
+        List<Collection> collections = collectionRepository.findAll();
+        List<CollectionDTO> collectionResponse = new ArrayList<>();
+        collectionResponse = collections.stream().map(CollectionDTO::new).toList();
+        return ResponseEntity.ok(collectionResponse);
     }
 
     @Transactional
-    public ResponseEntity<List<Collection>> findByUserID(Long userID) {
+    public ResponseEntity<List<CollectionDTO>> findByUserID(Long userID) {
         try {
             User user = userRepository.findById(userID).orElseThrow(() -> new NotFoundException("cannot find user"));
-            return ResponseEntity.ok(collectionRepository.findByUser(user).orElseThrow(() -> new NotFoundException("cannot find collection")));
+            List<Collection> collections = collectionRepository.findByUser(user).orElseThrow(() -> new NotFoundException("cannot find collection"));
+            List<CollectionDTO> collectionResponse = new ArrayList<>();
+            collectionResponse = collections.stream().map(CollectionDTO::new).toList();
+            return ResponseEntity.ok(collectionResponse);
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.notFound().build();
@@ -80,7 +88,7 @@ public class CollectionService {
     }
 
     @Transactional
-    public ResponseEntity<Collection> update(Long id, UpdateCollectionRequest request) {
+    public ResponseEntity<CollectionDTO> update(Long id, UpdateCollectionRequest request) {
         try {
             Collection collection = collectionRepository.findById(id).orElseThrow(() -> new NotFoundException("cannot find collection"));
             if (request.getCollection_name() != null) {
@@ -100,7 +108,7 @@ public class CollectionService {
                 }
                 collection.setBooks(bookList);
             }
-            return ResponseEntity.ok(collection);
+            return ResponseEntity.ok(new CollectionDTO(collection));
 
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
